@@ -12,7 +12,7 @@
                 <h1 class="display-4">Contact Us</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
                     </ol>
                 </nav>
@@ -31,7 +31,7 @@
                         <h3 class="mb-4">Get in Touch</h3>
                         <p class="mb-4">Have questions about our programs or want to collaborate? Fill out the form below and we'll get back to you as soon as possible.</p>
                         
-                        <form method="post" action="{% url 'contact' %}">
+                        <form method="post" action="{% url 'core:contact' %}">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -226,7 +226,7 @@
                 </div>
                 
                 <div class="text-center mt-4">
-                    <a href="{% url 'faq' %}" class="btn btn-outline-primary">View All FAQs</a>
+                    <a href="{% url 'core:faq' %}" class="btn btn-outline-primary">View All FAQs</a>
                 </div>
             </div>
         </div>
