@@ -60,6 +60,12 @@
                     <img src="{{ resource.thumbnail.url }}" class="card-img-top" alt="{{ resource.title }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ resource.title }}</h5>
+                        <p class="card-text"><strong>Category:</strong> {{ resource.category.name }}</p>
+                        <p class="card-text"><strong>Audience:</strong> {{ resource.get_audience_display }}</p>
+                        {% if resource.date_added %}
+                        <p class="card-text"><strong>Date Added:</strong> {{ resource.date_added|date:"F j, Y" }}</p>
+                        {% endif %}
+                        <p class="card-text"><strong>Downloads:</strong> {{ resource.download_count }}</p>
                         <p class="card-text">{{ resource.short_description }}</p>
                         <a href="{% url 'resources:resource_detail' resource.slug %}" class="btn btn-primary">View Details</a>
                     </div>
@@ -104,4 +110,19 @@
         {% endif %}
     </div>
 </section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    .card-text {
+        font-size: 0.9rem;
+    }
+    .breadcrumb {
+        background-color: transparent;
+    }
+</style>
 {% endblock %}

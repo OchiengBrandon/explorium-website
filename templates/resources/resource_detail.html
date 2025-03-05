@@ -26,6 +26,12 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mb-4 mb-lg-0">
+                <!-- Featured Image -->
+                <div class="resource-featured-image mb-4">
+                    <img src="{{ resource.featured_image.url }}" alt="{{ resource.title }}" class="img-fluid rounded shadow">
+                </div>
+                
+                <!-- Resource Content -->
                 <div class="resource-content card border-0 shadow-sm mb-4">
                     <div class="card-body p-4">
                         <h2 class="mb-4">About This Resource</h2>
@@ -33,10 +39,96 @@
                         <a href="{% url 'resources:resource_download' resource.slug %}" class="btn btn-primary">Download Resource</a>
                     </div>
                 </div>
+
+                <!-- Resource Gallery -->
+                {% if resource.gallery_images.all %}
+                <div class="resource-gallery card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Resource Gallery</h3>
+                        <div class="row">
+                            {% for image in resource.gallery_images.all %}
+                            <div class="col-md-4 col-6 mb-4">
+                                <a href="{{ image.image.url }}" class="gallery-item" data-caption="{{ image.caption }}">
+                                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid rounded">
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
             </div>
 
             <div class="col-lg-4">
+                <!-- Resource Info -->
+                <div class="resource-info card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Resource Information</h3>
+                        
+                        <div class="resource-info-item d-flex mb-3">
+                            <div class="resource-info-icon me-3">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div class="resource-info-content">
+                                <h5 class="mb-1">Category</h5>
+                                <p class="mb-0">{{ resource.category.name }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="resource-info-item d-flex mb-3">
+                            <div class="resource-info-icon me-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="resource-info-content">
+                                <h5 class="mb-1">Target Audience</h5>
+                                <p class="mb-0">{{ resource.get_audience_display }}</p>
+                            </div>
+                        </div>
+                        
+                        {% if resource.level %}
+                        <div class="resource-info-item d-flex mb-3">
+                            <div class="resource-info-icon me-3">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="resource-info-content">
+                                <h5 class="mb-1">Level</h5>
+                                <p class="mb-0">{{ resource.level }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if resource.subject %}
+                        <div class="resource-info-item d-flex mb-3">
+                            <div class="resource-info-icon me-3">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="resource-info-content">
+                                <h5 class="mb-1">Subject</h5>
+                                <p class="mb-0">{{ resource.subject }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if resource.tags.all %}
+                        <div class="resource-info-item d-flex">
+                            <div class="resource-info-icon me-3">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div class="resource-info-content">
+                                <h5 class="mb-1">Tags</h5>
+                                <div class="resource-tags">
+                                    {% for tag in resource.tags.all %}
+                                    <a href="#" class="badge bg-light text-dark me-1 mb-1">{{ tag.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
                 <!-- Related Resources -->
+                {% if related_resources %}
                 <div class="related-resources card border-0 shadow-sm">
                     <div class="card-body p-4">
                         <h3 class="mb-4">Related Resources</h3>
@@ -49,8 +141,68 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-4">Explore More Resources</h2>
+                <p class="lead mb-4">Discover a variety of resources designed to enhance learning.</p>
+                <a href="{% url 'resources:resource_list' %}" class="btn btn-primary btn-lg">View All Resources</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .resource-info-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+    }
+    
+    .gallery-item {
+        display: block;
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+    
+    .gallery-item:hover {
+        transform: scale(1.05);
+    }
+    
+    .resource-tags .badge {
+        padding: 0.5rem 0.8rem;
+        border-radius: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize lightbox for gallery
+        $('.gallery-item').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    });
+</script>
 {% endblock %}
