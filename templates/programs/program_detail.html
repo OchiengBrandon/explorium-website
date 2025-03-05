@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ program.title }} - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <h1 class="display-4">{{ program.title }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'program_list' %}" class="text-white">Programs</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'program_list_by_category' program.category.slug %}" class="text-white">{{ program.category.name }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ program.title }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Program Detail Section -->
+<section class="program-detail-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <!-- Featured Image -->
+                <div class="program-featured-image mb-4">
+                    <img src="{{ program.featured_image.url }}" alt="{{ program.title }}" class="img-fluid rounded shadow">
+                </div>
+                
+                <!-- Program Content -->
+                <div class="program-content card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h2 class="mb-4">About This Program</h2>
+                        {{ program.content|safe }}
+                    </div>
+                </div>
+                
+                <!-- Program Gallery -->
+                {% if program.gallery_images.all %}
+                <div class="program-gallery card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Program Gallery</h3>
+                        <div class="row">
+                            {% for image in program.gallery_images.all %}
+                            <div class="col-md-4 col-6 mb-4">
+                                <a href="{{ image.image.url }}" class="gallery-item" data-caption="{{ image.caption }}">
+                                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid rounded">
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Curricula -->
+                {% if program.curricula.all %}
+                <div class="program-curricula card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Curriculum Resources</h3>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Level</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for curriculum in program.curricula.all %}
+                                    {% if curriculum.is_active %}
+                                    <tr>
+                                        <td>{{ curriculum.title }}</td>
+                                        <td>{{ curriculum.get_level_display }}</td>
+                                        <td>
+                                            <a href="{% url 'curriculum_detail' curriculum.slug %}" class="btn btn-sm btn-outline-primary">View Details</a>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="col-lg-4">
+                <!-- Program Info -->
+                <div class="program-info card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Program Information</h3>
+                        
+                        <div class="program-info-item d-flex mb-3">
+                            <div class="program-info-icon me-3">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div class="program-info-content">
+                                <h5 class="mb-1">Category</h5>
+                                <p class="mb-0">{{ program.category.name }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="program-info-item d-flex mb-3">
+                            <div class="program-info-icon me-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="program-info-content">
+                                <h5 class="mb-1">Target Audience</h5>
+                                <p class="mb-0">{{ program.get_audience_display }}</p>
+                            </div>
+                        </div>
+                        
+                        {% if program.duration %}
+                        <div class="program-info-item d-flex mb-3">
+                            <div class="program-info-icon me-3">
+                                <i class="far fa-clock"></i>
+                            </div>
+                            <div class="program-info-content">
+                                <h5 class="mb-1">Duration</h5>
+                                <p class="mb-0">{{ program.duration }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if program.location %}
+                        <div class="program-info-item d-flex mb-3">
+                            <div class="program-info-icon me-3">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="program-info-content">
+                                <h5 class="mb-1">Location</h5>
+                                <p class="mb-0">{{ program.location }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if program.tags.all %}
+                        <div class="program-info-item d-flex">
+                            <div class="program-info-icon me-3">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div class="program-info-content">
+                                <h5 class="mb-1">Tags</h5>
+                                <div class="program-tags">
+                                    {% for tag in program.tags.all %}
+                                    <a href="#" class="badge bg-light text-dark me-1 mb-1">{{ tag.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- CTA Card -->
+                <div class="program-cta card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4 text-center">
+                        <h4 class="mb-3">Interested in This Program?</h4>
+                        <p class="mb-4">Contact us for more information or to register for this program.</p>
+                        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg">Contact Us</a>
+                    </div>
+                </div>
+                
+                <!-- Related Programs -->
+                {% if related_programs %}
+                <div class="related-programs card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Related Programs</h3>
+                        
+                        {% for related in related_programs %}
+                        <div class="related-program-item mb-3 {% if not forloop.last %}border-bottom pb-3{% endif %}">
+                            <div class="d-flex">
+                                <div class="related-program-img me-3">
+                                    <img src="{{ related.featured_image.url }}" alt="{{ related.title }}" class="img-fluid rounded" width="80">
+                                </div>
+                                <div class="related-program-content">
+                                    <h5 class="mb-1"><a href="{% url 'program_detail' related.slug %}">{{ related.title }}</a></h5>
+                                    <span class="badge bg-primary">{{ related.category.name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-4">Explore Our Other Programs</h2>
+                <p class="lead mb-4">Discover more STEM programs designed to inspire and educate learners of all ages.</p>
+                <a href="{% url 'program_list' %}" class="btn btn-primary btn-lg">View All Programs</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .program-info-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+    }
+    
+    .gallery-item {
+        display: block;
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+    
+    .gallery-item:hover {
+        transform: scale(1.05);
+    }
+    
+    .program-tags .badge {
+        padding: 0.5rem 0.8rem;
+        border-radius: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize lightbox for gallery
+        $('.gallery-item').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    });
+</script>
+{% endblock %}

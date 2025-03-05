@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_settings.site_name }}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    {% if site_settings.favicon %}
+    <link rel="icon" href="{{ site_settings.favicon.url }}" type="image/x-icon">
+    {% endif %}
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    
+    <!-- Additional CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'core:home' %}">
+                    {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="40">
+                    {% else %}
+                    {{ site_settings.site_name }}
+                    {% endif %}
+                </a>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarMain">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'core:home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'core:about' %}">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="programsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Programs
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="programsDropdown">
+                                <li><a class="dropdown-item" href="{% url 'programs:program_list' %}">All Programs</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                {% for category in program_categories %}
+                                <li><a class="dropdown-item" href="{% url 'programs:program_list_by_category' category.slug %}">{{ category.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/events/' in request.path %}active{% endif %}" href="{% url 'events:event_list' %}">Events</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Resources
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="resourcesDropdown">
+                                <li><a class="dropdown-item" href="{% url 'resources:resource_list' %}">STEM Resources</a></li>
+                                <li><a class="dropdown-item" href="{% url 'resources:teaching_material_list' %}">Teaching Materials</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/blog/' in request.path %}active{% endif %}" href="{% url 'blog:post_list' %}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/contact/' %}active{% endif %}" href="{% url 'core:contact' %}">Contact</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="d-flex ms-lg-3">
+                        {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.first_name|default:user.username }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">My Profile</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                                {% if user.is_staff %}
+                                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Admin Panel</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+                            </ul>
+                        </div>
+                        {% else %}
+                        <a href="{% url 'accounts:account_login' %}" class="btn btn-outline-primary me-2">Login</a>
+                        <a href="{% url 'accounts:account_signup' %}" class="btn btn-primary">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        {% if messages %}
+        <div class="container mt-5 pt-3">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Newsletter -->
+    <section class="newsletter-section bg-light py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <p class="mb-4">Stay updated with our latest news, events, and resources.</p>
+                    <form action="{% url 'core:newsletter_subscribe' %}" method="post" id="newsletter-form" class="newsletter-form">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email Address" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                        <div class="newsletter-response"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white pt-5 pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">About Us</h5>
+                    <p>{{ site_settings.site_description|truncatewords:25 }}</p>
+                    <div class="social-links mt-3">
+                        {% if site_settings.facebook %}
+                        <a href="{{ site_settings.facebook }}" class="me-2" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if site_settings.twitter %}
+                        <a href="{{ site_settings.twitter }}" class="me-2" target="_blank"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if site_settings.instagram %}
+                        <a href="{{ site_settings.instagram }}" class="me-2" target="_blank"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if site_settings.linkedin %}
+                        <a href="{{ site_settings.linkedin }}" class="me-2" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if site_settings.youtube %}
+                        <a href="{{ site_settings.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5 class="text-uppercase mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'core:home' %}" class="text-white">Home</a></li>
+                        <li class="mb-2"><a href="{% url 'core:about' %}" class="text-white">About Us</a></li>
+                        <li class="mb-2"><a href="{% url 'programs:program_list' %}" class="text-white">Programs</a></li>
+                        <li class="mb-2"><a href="{% url 'events:event_list' %}" class="text-white">Events</a></li>
+                        <li class="mb-2"><a href="{% url 'resources:resource_list' %}" class="text-white">Resources</a></li>
+                        <li class="mb-2"><a href="{% url 'blog:post_list' %}" class="text-white">Blog</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'resources:resource_list' %}" class="text-white">STEM Resources</a></li>
+                        <li class="mb-2"><a href="{% url 'resources:teaching_material_list' %}" class="text-white">Teaching Materials</a></li>
+                        <li class="mb-2"><a href="{% url 'core:faq' %}" class="text-white">FAQs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-uppercase mb-4">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        {% if site_settings.address %}
+                        <li class="mb-2">
+                            <i class="fas fa-map-marker-alt me-2"></i> {{ site_settings.address }}
+                        </li>
+                        {% endif %}
+                        {% if site_settings.phone %}
+                        <li class="mb-2">
+                            <i class="fas fa-phone me-2"></i> {{ site_settings.phone }}
+                        </li>
+                        {% endif %}
+                        {% if site_settings.email %}
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2"></i> {{ site_settings.email }}
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <div class="row align-items-center">
+                <div class="col-md-7 col-lg-8">
+                    <p>© {{ current_year }} {{ site_settings.site_name }}. All rights reserved.</p>
+                </div>
+                <div class="col-md-5 col-lg-4">
+                    <div class="text-md-end">
+                        <a href="#" class="text-white me-3">Privacy Policy</a>
+                        <a href="#" class="text-white">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="/static/js/main.js"></script>
+    
+    <!-- Additional JS -->
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

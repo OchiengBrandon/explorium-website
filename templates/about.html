@@ -1,0 +1,336 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <h1 class="display-4">About Us</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://picsum.photos/id/225/800/600" alt="About Explorium" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-6">
+                <div class="section-title mb-4">
+                    <span class="subtitle">Our Story</span>
+                    <h2>Who We Are</h2>
+                </div>
+                <p>Explorium Organisation is dedicated to promoting Science, Technology, Engineering, and Mathematics (STEM) education in Kenya. We believe that STEM education is a catalyst for economic empowerment and innovation.</p>
+                <p>Founded with a vision to position STEM as an important catalyst in the economic empowerment of individuals and communities, we have been working tirelessly to enrich schools' curriculum and equip learners by providing valuable hands-on learning experiences.</p>
+                <p>Our world-class exhibits are designed to increase learners' skills and understanding of Science, Technology, Engineering, and Mathematics, making education more engaging and practical.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision Section -->
+<section class="mission-vision-section py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="mission-card card h-100 border-0 shadow-sm p-4">
+                    <div class="card-body">
+                        <div class="icon-box mb-4">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="card-title mb-4">Our Mission</h3>
+                        <p class="card-text">To promote Science, Technology, Engineering, and Mathematics (STEM) in Kenya by providing innovative educational experiences that inspire curiosity, creativity, and critical thinking in learners of all ages.</p>
+                        <p class="card-text">We are committed to enriching the school curriculum and equipping learners with practical skills through hands-on experiences, while also providing a platform for families to explore science together.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="vision-card card h-100 border-0 shadow-sm p-4">
+                    <div class="card-body">
+                        <div class="icon-box mb-4">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3 class="card-title mb-4">Our Vision</h3>
+                        <p class="card-text">To be the leading organization in promoting STEM education in Kenya, fostering a generation of innovative thinkers and problem solvers who will drive the country's economic and technological advancement.</p>
+                        <p class="card-text">We envision a future where STEM education is accessible to all, bridging the gap between theoretical knowledge and practical application, and empowering individuals to contribute meaningfully to society.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Core Values Section -->
+<section class="core-values-section py-5">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">What We Believe In</span>
+            <h2>Our Core Values</h2>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="value-icon mb-3">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h4 class="value-title mb-3">Innovation</h4>
+                        <p class="value-text">We embrace creativity and forward-thinking approaches to education, constantly seeking new ways to make learning engaging and effective.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="value-icon mb-3">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h4 class="value-title mb-3">Collaboration</h4>
+                        <p class="value-text">We believe in the power of partnerships and working together with schools, communities, and organizations to achieve our mission.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="value-icon mb-3">
+                            <i class="fas fa-universal-access"></i>
+                        </div>
+                        <h4 class="value-title mb-3">Inclusivity</h4>
+                        <p class="value-text">We are committed to making STEM education accessible to all, regardless of background, gender, or socioeconomic status.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="value-icon mb-3">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4 class="value-title mb-3">Excellence</h4>
+                        <p class="value-text">We strive for the highest standards in everything we do, from our educational programs to our organizational practices.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="value-icon mb-3">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h4 class="value-title mb-3">Growth</h4>
+                        <p class="value-text">We foster continuous learning and development, both in our learners and within our organization.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <div class="value-icon mb-3">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h4 class="value-title mb-3">Responsibility</h4>
+                        <p class="value-text">We are committed to ethical practices and taking responsibility for our impact on the communities we serve and the environment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section py-5 bg-light">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">Meet Our Team</span>
+            <h2>The People Behind Explorium</h2>
+            <p class="lead">Our dedicated team of professionals is passionate about promoting STEM education in Kenya.</p>
+        </div>
+        
+        <div class="row">
+            {% for member in team_members %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="team-card card border-0 shadow-sm">
+                    <div class="team-img">
+                        <img src="{{ member.image.url }}" alt="{{ member.name }}" class="card-img-top">
+                        <div class="team-social">
+                            {% if member.linkedin %}
+                            <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if member.twitter %}
+                            <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                            {% endif %}
+                            {% if member.email %}
+                            <a href="mailto:{{ member.email }}"><i class="fas fa-envelope"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body text-center p-4">
+                        <h5 class="card-title mb-1">{{ member.name }}</h5>
+                        <p class="team-position text-muted mb-3">{{ member.position }}</p>
+                        <div class="team-bio">
+                            {{ member.bio|safe|truncatewords_html:25 }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Team information coming soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section class="partners-section py-5">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">Our Collaborators</span>
+            <h2>Our Partners</h2>
+            <p class="lead">We work with leading organizations to advance STEM education in Kenya.</p>
+        </div>
+        
+        <div class="row">
+            {% for partner in partners %}
+            <div class="col-lg-3 col-md-4 col-6 mb-4">
+                <div class="partner-item text-center">
+                    <a href="{{ partner.website }}" target="_blank" title="{{ partner.name }}">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Partner information coming soon.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="mb-3">Want to Partner with Us?</h2>
+                <p class="lead mb-0">Join us in our mission to promote STEM education in Kenya. Together, we can make a difference.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .icon-box {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+    }
+    
+    .icon-box i {
+        font-size: 2rem;
+        color: var(--primary-color);
+    }
+    
+    .value-icon {
+        width: 70px;
+        height: 70px;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        color: var(--primary-color);
+        font-size: 1.8rem;
+    }
+    
+    .team-card {
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+    
+    .team-card:hover {
+        transform: translateY(-10px);
+    }
+    
+    .team-img {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .team-img img {
+        height: 300px;
+        object-fit: cover;
+        transition: var(--transition);
+    }
+    
+    .team-card:hover .team-img img {
+        transform: scale(1.1);
+    }
+    
+    .team-social {
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        right: 0;
+        background: rgba(52, 152, 219, 0.8);
+        padding: 15px 0;
+        transition: var(--transition);
+        opacity: 0;
+    }
+    
+    .team-card:hover .team-social {
+        bottom: 0;
+        opacity: 1;
+    }
+    
+    .team-social a {
+        display: inline-flex;
+        width: 36px;
+        height: 36px;
+        background: white;
+        color: var(--primary-color);
+        border-radius: 50%;
+        margin: 0 5px;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+    }
+    
+    .team-social a:hover {
+        background: var(--dark-color);
+        color: white;
+    }
+    
+    .team-position {
+        display: block;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <h1 class="display-4">Frequently Asked Questions</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 mb-4 mb-lg-0">
+                <div class="faq-sidebar card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="mb-4">Categories</h5>
+                        <ul class="nav flex-column faq-categories" id="faqTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="all-tab" data-bs-toggle="pill" href="#all" role="tab" aria-controls="all" aria-selected="true">All Questions</a>
+                            </li>
+                            {% for category in categories %}
+                            <li class="nav-item">
+                                <a class="nav-link" id="{{ category|slugify }}-tab" data-bs-toggle="pill" href="#{{ category|slugify }}" role="tab" aria-controls="{{ category|slugify }}" aria-selected="false">{{ category }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-contact card border-0 shadow-sm mt-4">
+                    <div class="card-body p-4">
+                        <h5 class="mb-3">Still Have Questions?</h5>
+                        <p>Contact us if you can't find the answer to your question.</p>
+                        <a href="{% url 'contact' %}" class="btn btn-primary">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-9">
+                <div class="tab-content" id="faqTabContent">
+                    <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                        <div class="accordion" id="faqAccordion">
+                            {% for faq in faqs %}
+                            <div class="accordion-item mb-3 border-0 shadow-sm">
+                                <h2 class="accordion-header" id="heading{{ faq.id }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ faq.id }}" aria-expanded="false" aria-controls="collapse{{ faq.id }}">
+                                        {{ faq.question }}
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ faq.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ faq.id }}" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        {{ faq.answer|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="text-center py-5">
+                                <p>No FAQs available at the moment. Please check back later.</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    {% for category in categories %}
+                    <div class="tab-pane fade" id="{{ category|slugify }}" role="tabpanel" aria-labelledby="{{ category|slugify }}-tab">
+                        <div class="accordion" id="{{ category|slugify }}Accordion">
+                            {% for faq in faqs %}
+                            {% if faq.category == category %}
+                            <div class="accordion-item mb-3 border-0 shadow-sm">
+                                <h2 class="accordion-header" id="heading{{ category|slugify }}{{ faq.id }}">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ category|slugify }}{{ faq.id }}" aria-expanded="false" aria-controls="collapse{{ category|slugify }}{{ faq.id }}">
+                                        {{ faq.question }}
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ category|slugify }}{{ faq.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ category|slugify }}{{ faq.id }}" data-bs-parent="#{{ category|slugify }}Accordion">
+                                    <div class="accordion-body">
+                                        {{ faq.answer|safe }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-4">Join Our STEM Community</h2>
+                <p class="lead mb-4">Stay updated with our latest news, events, and resources by subscribing to our newsletter.</p>
+                <form action="{% url 'newsletter_subscribe' %}" method="post" id="newsletter-form" class="newsletter-form">
+                    {% csrf_token %}
+                    <div class="input-group mb-3 mx-auto" style="max-width: 500px;">
+                        <input type="email" name="email" class="form-control" placeholder="Your Email Address" required>
+                        <button class="btn btn-primary" type="submit">Subscribe</button>
+                    </div>
+                    <div class="newsletter-response"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .faq-categories .nav-link {
+        color: var(--dark-color);
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius);
+        transition: var(--transition);
+    }
+    
+    .faq-categories .nav-link:hover,
+    .faq-categories .nav-link.active {
+        background-color: rgba(52, 152, 219, 0.1);
+        color: var(--primary-color);
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: rgba(52, 152, 219, 0.1);
+        color: var(--primary-color);
+    }
+    
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(52, 152, 219, 0.25);
+    }
+    
+    .accordion-item {
+        border-radius: var(--radius) !important;
+        overflow: hidden;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Newsletter form AJAX submission
+    $(document).ready(function() {
+        $('#newsletter-form').submit(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('.newsletter-response').html('<div class="alert alert-success mt-3">' + response.message + '</div>');
+                        $('#newsletter-form')[0].reset();
+                    } else {
+                        $('.newsletter-response').html('<div class="alert alert-danger mt-3">' + response.message + '</div>');
+                    }
+                },
+                error: function() {
+                    $('.newsletter-response').html('<div class="alert alert-danger mt-3">An error occurred. Please try again later.</div>');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

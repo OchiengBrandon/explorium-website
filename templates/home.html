@@ -1,0 +1,386 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section position-relative">
+    <div class="hero-slider">
+        <div class="hero-slide" style="background-image: url('https://picsum.photos/id/180/1920/1080');">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="hero-content text-white">
+                            <h1 class="display-4 fw-bold mb-4">Inspiring the Next Generation of STEM Leaders</h1>
+                            <p class="lead mb-4">Explorium Organisation is dedicated to promoting Science, Technology, Engineering, and Mathematics (STEM) education in Kenya.</p>
+                            <div class="hero-buttons">
+                                <a href="{% url 'programs:program_list' %}" class="btn btn-primary btn-lg me-3">Our Programs</a>
+                                <a href="{% url 'core:about' %}" class="btn btn-outline-light btn-lg">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-overlay"></div>
+</section>
+
+<!-- About Section -->
+<section class="about-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="about-image position-relative">
+                    <img src="https://picsum.photos/id/225/600/400" alt="About Explorium" class="img-fluid rounded shadow">
+                    <div class="experience-badge">
+                        <span class="years">5+</span>
+                        <span class="text">Years of Experience</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="section-title mb-4">
+                    <span class="subtitle">About Us</span>
+                    <h2>Promoting STEM Education in Kenya</h2>
+                </div>
+                <p>Explorium Organisation is dedicated to promoting Science, Technology, Engineering, and Mathematics (STEM) education in Kenya. We believe that STEM education is a catalyst for economic empowerment and innovation.</p>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-box d-flex align-items-start">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-microscope"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Hands-on Learning</h5>
+                                <p>Providing practical learning experiences through world-class exhibits.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-box d-flex align-items-start">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Teacher Training</h5>
+                                <p>Complementing school curriculum and training science multipliers.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-box d-flex align-items-start">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Family Engagement</h5>
+                                <p>Creating a place for families to explore science together.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="feature-box d-flex align-items-start">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>Innovation</h5>
+                                <p>Motivating students and teachers to bring out creativity.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'core:about' %}" class="btn btn-primary mt-3">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Programs Section -->
+<section class="programs-section py-5 bg-light">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">What We Offer</span>
+            <h2>Our Featured Programs</h2>
+            <p class="lead">Discover our innovative STEM programs designed to inspire and educate.</p>
+        </div>
+        
+        <div class="row">
+            {% for program in programs %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="program-card card h-100 border-0 shadow-sm">
+                    <img src="{{ program.featured_image.url }}" class="card-img-top" alt="{{ program.title }}">
+                    <div class="card-body">
+                        <span class="program-category badge bg-primary mb-2">{{ program.category.name }}</span>
+                        <h5 class="card-title">{{ program.title }}</h5>
+                        <p class="card-text">{{ program.short_description|truncatewords:20 }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="{% url 'programs:program_detail' program.slug %}" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No programs available at the moment. Please check back later.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'programs:program_list' %}" class="btn btn-primary">View All Programs</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <div class="stat-item text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="stat-number">5,000+</h3>
+                    <p class="stat-text">Students Reached</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <div class="stat-item text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="stat-number">500+</h3>
+                    <p class="stat-text">Teachers Trained</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <div class="stat-item text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h3 class="stat-number">100+</h3>
+                    <p class="stat-text">Schools Partnered</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item text-center">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="stat-number">50+</h3>
+                    <p class="stat-text">STEM Programs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Events Section -->
+<section class="events-section py-5 bg-light">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">Join Us</span>
+            <h2>Upcoming Events</h2>
+            <p class="lead">Participate in our upcoming events and workshops to enhance your STEM knowledge.</p>
+        </div>
+        
+        <div class="row">
+            {% for event in upcoming_events %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="event-card card h-100 border-0 shadow-sm">
+                    <div class="event-date position-absolute">
+                        <span class="day">{{ event.start_date|date:"d" }}</span>
+                        <span class="month">{{ event.start_date|date:"M" }}</span>
+                    </div>
+                    <img src="{{ event.featured_image.url }}" class="card-img-top" alt="{{ event.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <div class="event-info mb-3">
+                            <div class="event-time mb-2">
+                                <i class="far fa-clock me-2"></i>
+                                {{ event.start_date|date:"g:i A" }} - {{ event.end_date|date:"g:i A" }}
+                            </div>
+                            <div class="event-location">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                {{ event.location }}
+                            </div>
+                        </div>
+                        <p class="card-text">{{ event.short_description|truncatewords:15 }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="{% url 'events:event_detail' event.slug %}" class="btn btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No upcoming events at the moment. Please check back later.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'events:event_list' %}" class="btn btn-primary">View All Events</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section py-5">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">Testimonials</span>
+            <h2>What People Say About Us</h2>
+        </div>
+        
+        <div class="row">
+            {% for testimonial in testimonials %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="testimonial-card card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="testimonial-rating mb-3">
+                            {% for i in "12345" %}
+                            <i class="fas fa-star {% if forloop.counter <= testimonial.rating %}text-warning{% else %}text-muted{% endif %}"></i>
+                            {% endfor %}
+                        </div>
+                        <p class="testimonial-text mb-4">{{ testimonial.content }}</p>
+                        <div class="testimonial-author d-flex align-items-center">
+                            {% if testimonial.image %}
+                            <img src="{{ testimonial.image.url }}" alt="{{ testimonial.name }}" class="rounded-circle me-3" width="60" height="60">
+                            {% else %}
+                            <div class="testimonial-avatar rounded-circle me-3 d-flex align-items-center justify-content-center">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            {% endif %}
+                            <div>
+                                <h6 class="mb-1">{{ testimonial.name }}</h6>
+                                {% if testimonial.position %}
+                                <p class="mb-0 text-muted">{{ testimonial.position }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No testimonials available at the moment.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Blog Section -->
+<section class="blog-section py-5 bg-light">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">Latest News</span>
+            <h2>From Our Blog</h2>
+            <p class="lead">Stay updated with our latest news and articles about STEM education.</p>
+        </div>
+        
+        <div class="row">
+            {% for post in recent_posts %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="blog-card card h-100 border-0 shadow-sm">
+                    <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    <div class="card-body">
+                        <div class="blog-meta mb-2">
+                            <span class="blog-category">{{ post.category.name }}</span>
+                            <span class="blog-date">{{ post.published_at|date:"M d, Y" }}</span>
+                        </div>
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content|striptags|truncatewords:20 }}</p>
+                    </div>
+                    <div class="card-footer bg-white border-0">
+                        <a href="{% url 'blog:post_detail' post.slug %}" class="btn btn-link p-0">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>No blog posts available at the moment. Please check back later.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'blog:post_list' %}" class="btn btn-primary">View All Posts</a>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section class="partners-section py-5">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <span class="subtitle">Our Partners</span>
+            <h2>Trusted by Leading Organizations</h2>
+        </div>
+        
+        <div class="partners-slider">
+            <div class="row">
+                {% for partner in partners %}
+                <div class="col-lg-3 col-md-4 col-6 mb-4">
+                    <div class="partner-item text-center">
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid">
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <p>No partners available at the moment.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <h2 class="mb-3">Ready to Join Our STEM Community?</h2>
+                <p class="lead mb-0">Get involved with Explorium Organisation and be part of our mission to promote STEM education in Kenya.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'core:contact' %}" class="btn btn-light btn-lg">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Newsletter form AJAX submission
+    $(document).ready(function() {
+        $('#newsletter-form').submit(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        $('.newsletter-response').html('<div class="alert alert-success mt-3">' + response.message + '</div>');
+                        $('#newsletter-form')[0].reset();
+                    } else {
+                        $('.newsletter-response').html('<div class="alert alert-danger mt-3">' + response.message + '</div>');
+                    }
+                },
+                error: function() {
+                    $('.newsletter-response').html('<div class="alert alert-danger mt-3">An error occurred. Please try again later.</div>');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
