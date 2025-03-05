@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Events - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <h1 class="display-4">Upcoming Events</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Events Section -->
+<section class="events-section py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar for Filters -->
+            <div class="col-lg-3 mb-4">
+                <h5 class="mb-4">Filter by Category</h5>
+                <ul class="list-unstyled">
+                    {% for category in categories %}
+                        <li>
+                            <a href="{% url 'events:event_list_by_category' category.slug %}" class="text-dark">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <h5 class="mt-4">Filter by Time</h5>
+                <form method="get">
+                    <label for="period-select" class="form-label">Select Time Period</label>
+                    <select id="period-select" name="period" class="form-select" onchange="this.form.submit()">
+                        <option value="upcoming" {% if current_period == 'upcoming' %}selected{% endif %}>Upcoming</option>
+                        <option value="ongoing" {% if current_period == 'ongoing' %}selected{% endif %}>Ongoing</option>
+                        <option value="past" {% if current_period == 'past' %}selected{% endif %}>Past</option>
+                    </select>
+                </form>
+            </div>
+            
+            <!-- Events List -->
+            <div class="col-lg-9">
+                <div class="row">
+                    {% for event in events %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="event-card card border-0 shadow-sm">
+                            <img src="{{ event.featured_image.url }}" class="card-img-top" alt="{{ event.title }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ event.title }}</h5>
+                                <p class="card-text">{{ event.short_description }}</p>
+                                <p class="card-text"><small class="text-muted">{{ event.start_date|date:"F j, Y" }}</small></p>
+                                <a href="{% url 'events:event_detail' event.slug %}" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12">
+                        <div class="alert alert-info">
+                            No events found matching your criteria.
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if is_paginated %}
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if current_period %}&period={{ current_period }}{% endif %}">First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if current_period %}&period={{ current_period }}{% endif %}">Previous</a>
+                        </li>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}{% if current_period %}&period={{ current_period }}{% endif %}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if current_period %}&period={{ current_period }}{% endif %}">Next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if current_period %}&period={{ current_period }}{% endif %}">Last</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

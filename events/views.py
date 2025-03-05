@@ -87,12 +87,12 @@ class EventRegistrationView(CreateView):
         # Check if registration is still open
         if not self.event.is_registration_open:
             messages.error(request, "Registration for this event is closed.")
-            return HttpResponseRedirect(reverse('event_detail', kwargs={'slug': self.event.slug}))
+            return HttpResponseRedirect(reverse('events:event_detail', kwargs={'slug': self.event.slug}))
         
         # Check if event has capacity
         if self.event.capacity > 0 and self.event.available_seats == 0:
             messages.error(request, "This event is fully booked.")
-            return HttpResponseRedirect(reverse('event_detail', kwargs={'slug': self.event.slug}))
+            return HttpResponseRedirect(reverse('events:event_detail', kwargs={'slug': self.event.slug}))
         
         # Check if user is already registered
         if request.user.is_authenticated:
@@ -103,7 +103,7 @@ class EventRegistrationView(CreateView):
             
             if existing_registration:
                 messages.info(request, "You are already registered for this event.")
-                return HttpResponseRedirect(reverse('event_detail', kwargs={'slug': self.event.slug}))
+                return HttpResponseRedirect(reverse('events:event_detail', kwargs={'slug': self.event.slug}))
         
         return super().dispatch(request, *args, **kwargs)
     
@@ -122,4 +122,4 @@ class EventRegistrationView(CreateView):
         
         registration.save()
         messages.success(self.request, "Your registration has been submitted successfully!")
-        return HttpResponseRedirect(reverse('event_detail', kwargs={'slug': self.event.slug}))
+        return HttpResponseRedirect(reverse('events:event_detail', kwargs={'slug': self.event.slug}))
