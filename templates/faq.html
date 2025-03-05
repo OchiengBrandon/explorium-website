@@ -11,7 +11,7 @@
                 <h1 class="display-4">Frequently Asked Questions</h1>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">FAQ</li>
                     </ol>
                 </nav>
@@ -45,7 +45,7 @@
                     <div class="card-body p-4">
                         <h5 class="mb-3">Still Have Questions?</h5>
                         <p>Contact us if you can't find the answer to your question.</p>
-                        <a href="{% url 'contact' %}" class="btn btn-primary">Contact Us</a>
+                        <a href="{% url 'core:contact' %}" class="btn btn-primary">Contact Us</a>
                     </div>
                 </div>
             </div>
@@ -110,7 +110,7 @@
             <div class="col-lg-8 text-center">
                 <h2 class="mb-4">Join Our STEM Community</h2>
                 <p class="lead mb-4">Stay updated with our latest news, events, and resources by subscribing to our newsletter.</p>
-                <form action="{% url 'newsletter_subscribe' %}" method="post" id="newsletter-form" class="newsletter-form">
+                <form action="{% url 'core:newsletter_subscribe' %}" method="post" id="newsletter-form" class="newsletter-form">
                     {% csrf_token %}
                     <div class="input-group mb-3 mx-auto" style="max-width: 500px;">
                         <input type="email" name="email" class="form-control" placeholder="Your Email Address" required>
