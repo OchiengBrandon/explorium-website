@@ -18,9 +18,10 @@
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     
     <!-- Additional CSS -->
     {% block extra_css %}{% endblock %}
@@ -240,7 +241,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <!-- Custom JS -->
-    <script src="/static/js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     
     <!-- Additional JS -->
     {% block extra_js %}{% endblock %}
