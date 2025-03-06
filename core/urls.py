@@ -4,7 +4,7 @@ from .views import (
     FAQView, newsletter_subscribe
 )
 
-app_name = 'core'  # Set the namespace for this app
+app_name = 'core'  
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),

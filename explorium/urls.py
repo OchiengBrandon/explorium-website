@@ -8,8 +8,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),  # Include allauth URLs for account management
-    path('accounts/', include('accounts.urls', namespace='accounts')),  # Include your accounts app URLs
+    path('accounts/', include('allauth.urls')),  
+    path('accounts/', include('accounts.urls', namespace='accounts')),  
     path('', include('core.urls')),
     path('programs/', include('programs.urls')),
     path('events/', include('events.urls')),

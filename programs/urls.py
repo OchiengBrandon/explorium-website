@@ -4,7 +4,7 @@ from .views import (
     CurriculumListView, CurriculumDetailView
 )
 
-app_name = 'programs'  # Set the namespace for this app
+app_name = 'programs' 
 
 urlpatterns = [
     path('', ProgramListView.as_view(), name='program_list'),

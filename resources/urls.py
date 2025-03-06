@@ -4,7 +4,7 @@ from .views import (
     TeachingMaterialListView, TeachingMaterialDetailView, teaching_material_download
 )
 
-app_name = 'resources'  # Set the namespace for this app
+app_name = 'resources'  
 
 urlpatterns = [
     path('', ResourceListView.as_view(), name='resource_list'),
