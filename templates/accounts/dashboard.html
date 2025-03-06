@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <h1 class="display-4">Dashboard</h1>
+                <p class="lead">Welcome, {{ request.user.first_name }}!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dashboard Section -->
+<section class="dashboard-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Your Profile Information</h5>
+                        <ul class="list-unstyled">
+                            <li><strong>First Name:</strong> {{ request.user.first_name }}</li>
+                            <li><strong>Last Name:</strong> {{ request.user.last_name }}</li>
+                            <li><strong>Email:</strong> {{ request.user.email }}</li>
+                            {% if profile.profile_picture %}
+                            <li><strong>Profile Picture:</strong></li>
+                            <li><img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="width:100px;height:auto;"></li>
+                            {% endif %}
+                        </ul>
+                        <a href="{% url 'accounts:profile' %}" class="btn btn-primary mt-3">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Activity Overview</h5>
+                        <p>This is your dashboard where you can manage your account and view your activities.</p>
+                        <!-- Additional activity information can go here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-section .card {
+        border-radius: var(--radius);
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Add any additional JavaScript if needed
+</script>
+{% endblock %}
