@@ -1,0 +1,100 @@
+<!-- account/email.html -->
+{% extends "account/base.html" %}
+
+{% block head_title %}Email Addresses{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Email Addresses</h2>
+            <p>Manage your email addresses</p>
+        </div>
+        
+        {% if user.emailaddress_set.all %}
+            <p class="help-text">The following email addresses are associated with your account:</p>
+            <form action="{% url 'account_email' %}" class="email_list" method="post">
+                {% csrf_token %}
+                
+                <div class="email-list">
+                    {% for emailaddress in user.emailaddress_set.all %}
+                        <div class="form-check" style="margin-bottom: 1rem; padding: 1rem; background-color: var(--input-bg); border-radius: 8px;">
+                            <input id="email_radio_{{ forloop.counter }}" type="radio" name="email" 
+                                   {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{% endif %} 
+                                   value="{{ emailaddress.email }}">
+                            <label for="email_radio_{{ forloop.counter }}" style="font-weight: 500; color: var(--text-primary);">
+                                {{ emailaddress.email }}
+                            </label>
+                            <div style="margin-left: 1.8rem; margin-top: 0.5rem;">
+                                {% if emailaddress.verified %}
+                                    <span class="badge" style="background-color: var(--success); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">Verified</span>
+                                {% else %}
+                                    <span class="badge" style="background-color: var(--warning); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">Unverified</span>
+                                {% endif %}
+                                {% if emailaddress.primary %}
+                                    <span class="badge" style="background-color: var(--primary-color); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.25rem;">Primary</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="form-group" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;">
+                    <button class="btn btn-primary" style="flex: 1;" type="submit" name="action_primary">Make Primary</button>
+                    <button class="btn btn-primary" style="flex: 1;" type="submit" name="action_send">Re-send Verification</button>
+                    <button class="btn btn-primary" style="flex: 1;" type="submit" name="action_remove">Remove</button>
+                </div>
+            </form>
+        {% else %}
+            <div class="alert alert-warning">
+                <p>You currently do not have any email address set up. You should add an email address so you can receive notifications and reset your password.</p>
+            </div>
+        {% endif %}
+
+        <div class="divider"><span>Add Email Address</span></div>
+
+        <form method="post" action="{% url 'account_email' %}" class="add_email">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <input type="email" name="email" placeholder="Email address" id="id_email" class="form-control" required>
+            </div>
+            
+            <button name="action_add" type="submit" class="btn btn-primary btn-block">Add Email</button>
+        </form>
+        
+        <div class="form-footer">
+            <p><a href="{% url 'account_change_password' %}">Change Password</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    document.addEventListener("DOMContentLoaded", function() {
+        const message = "Do you really want to remove the selected email address?";
+        const actions = document.getElementsByName("action_remove");
+        
+        if (actions.length > 0) {
+            actions[0].addEventListener("click", function(e) {
+                if (!confirm(message)) {
+                    e.preventDefault();
+                }
+            });
+        }
+        
+        const radios = document.querySelectorAll('input[type=radio][name=email]');
+        const submitActions = document.querySelectorAll('button[name^=action_]');
+        
+        for (let i = 0; i < radios.length; i++) {
+            radios[i].addEventListener('change', function() {
+                for (let j = 0; j < submitActions.length; j++) {
+                    submitActions[j].disabled = false;
+                }
+            });
+        }
+    });
+})();
+</script>
+{% endblock %}

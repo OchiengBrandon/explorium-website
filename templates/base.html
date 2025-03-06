@@ -33,10 +33,9 @@
             <div class="container">
                 <a class="navbar-brand" href="{% url 'core:home' %}">
                     {% if site_settings.logo %}
-                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="40">
-                    {% else %}
-                    {{ site_settings.site_name }}
+                        <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="40" style="margin-right: 8px;">
                     {% endif %}
+                    <span>{{ site_settings.site_name }}</span>
                 </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">

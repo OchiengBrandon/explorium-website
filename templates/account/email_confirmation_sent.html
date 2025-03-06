@@ -1,0 +1,24 @@
+<!-- email_confirmation_sent.html -->
+{% extends "account/base.html" %}
+
+{% block head_title %}Verify Your Email{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Verify Your Email</h2>
+            <p>Confirmation email has been sent</p>
+        </div>
+        
+        <div class="alert alert-info">
+            <p>We've sent an email to verify your email address. Please check your inbox and follow the confirmation link.</p>
+        </div>
+
+        <div class="form-footer">
+            <p>Didn't receive the email? Check your spam folder or contact support.</p>
+            <p><a href="{% url 'account_login' %}">Return to login</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

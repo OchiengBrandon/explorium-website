@@ -1,0 +1,27 @@
+<!-- logout.html -->
+{% extends "account/base.html" %}
+
+{% block head_title %}Sign Out{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Sign Out</h2>
+            <p>Are you sure you want to sign out?</p>
+        </div>
+        
+        <form method="post" action="{% url 'account_logout' %}">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+            {% endif %}
+            <button type="submit" class="btn btn-primary btn-block">Sign Out</button>
+        </form>
+        
+        <div class="form-footer">
+            <p><a href="javascript:history.back()">Cancel and go back</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

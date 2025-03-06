@@ -1,0 +1,21 @@
+<!-- email_confirmed.html -->
+{% extends "account/base.html" %}
+
+{% block head_title %}Email Confirmed{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Email Confirmed</h2>
+            <p>Thank you for verifying your email address</p>
+        </div>
+        
+        <div class="alert alert-success">
+            <p>Your email address has been successfully confirmed. Your account is now fully activated.</p>
+        </div>
+
+        <a href="{% url 'account_login' %}" class="btn btn-primary btn-block">Sign In</a>
+    </div>
+</div>
+{% endblock %}
