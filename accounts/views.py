@@ -8,10 +8,12 @@ from django.contrib import messages
 from .models import UserProfile
 from .forms import UserProfileForm
 
+
 @login_required
 def profile_view(request):
+    # Get or create the user profile
     profile, created = UserProfile.objects.get_or_create(user=request.user)
-    
+
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
@@ -20,10 +22,16 @@ def profile_view(request):
             return redirect('accounts:profile')
     else:
         form = UserProfileForm(instance=profile)
-    
+
+    # Extract first name and last name for display if needed
+    first_name = profile.user.first_name
+    last_name = profile.user.last_name
+
     return render(request, 'accounts/profile.html', {
         'form': form,
-        'profile': profile
+        'profile': profile,
+        'first_name': first_name,
+        'last_name': last_name,
     })
 
 class DashboardView(LoginRequiredMixin, TemplateView):
