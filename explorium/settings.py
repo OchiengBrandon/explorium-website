@@ -10,7 +10,7 @@ SECRET_KEY = 'django-insecure-&ivr^61mjax3br$d2!_)bn+m&wdlfa6izp9%@#--3b&3+_3tqy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'explorium-website.onrender.com']
 
 # Application definition
 INSTALLED_APPS = [
