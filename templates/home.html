@@ -3,43 +3,87 @@
 {% block title %}Home - {{ site_settings.site_name }}{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero-section position-relative">
+<!-- Hero Section with Advanced Slider -->
+<section class="hero-section">
+    <!-- Slider Container -->
     <div class="hero-slider">
-        <div class="hero-slide" style="background-image: url('https://picsum.photos/id/180/1920/1080');">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center">
-                    <div class="col-lg-6">
-                        <div class="hero-content text-white">
-                            <h1 class="display-4 fw-bold mb-4">Inspiring the Next Generation of STEM Leaders</h1>
-                            <p class="lead mb-4">Explorium Organisation is dedicated to promoting Science, Technology, Engineering, and Mathematics (STEM) education in Kenya.</p>
-                            <div class="hero-buttons">
-                                <a href="{% url 'programs:program_list' %}" class="btn btn-primary btn-lg me-3">Our Programs</a>
-                                <a href="{% url 'core:about' %}" class="btn btn-outline-light btn-lg">Learn More</a>
-                            </div>
-                        </div>
+        <!-- Slides -->
+        <div class="hero-slide active" data-index="0">
+            <div class="slide-bg" style="background-image: url('https://picsum.photos/id/180/1920/1080');"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Inspiring the Next Generation of STEM Leaders</h1>
+                    <p class="hero-description">Explorium Organisation is dedicated to promoting Science, Technology, Engineering, and Mathematics (STEM) education in Kenya.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'programs:program_list' %}" class="btn btn-primary">Our Programs</a>
+                        <a href="{% url 'core:about' %}" class="btn btn-outline">Learn More</a>
                     </div>
                 </div>
             </div>
         </div>
+        
+        <div class="hero-slide" data-index="1">
+            <div class="slide-bg" style="background-image: url('https://picsum.photos/id/26/1920/1080');"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Hands-on Learning Experiences</h1>
+                    <p class="hero-description">Our interactive workshops and labs provide students with practical skills and real-world applications of STEM concepts.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'programs:program_list' %}" class="btn btn-primary">Our Workshops</a>
+                        <a href="{% url 'core:about' %}" class="btn btn-outline">Success Stories</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hero-slide" data-index="2">
+            <div class="slide-bg" style="background-image: url('https://picsum.photos/id/250/1920/1080');"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Building a Brighter Future</h1>
+                    <p class="hero-description">Join our community of innovators, creators, and problem-solvers as we shape the future of Kenya through STEM education.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'core:contact' %}" class="btn btn-primary">Join Us</a>
+                        <a href="{% url 'core:about' %}" class="btn btn-outline">Our Impact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation Arrows -->
+        <div class="slider-nav">
+            <button class="slider-arrow prev-arrow" aria-label="Previous slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="slider-arrow next-arrow" aria-label="Next slide">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Slide Indicators -->
+        <div class="slider-indicators">
+            <button class="indicator active" data-index="0" aria-label="Go to slide 1"></button>
+            <button class="indicator" data-index="1" aria-label="Go to slide 2"></button>
+            <button class="indicator" data-index="2" aria-label="Go to slide 3"></button>
+        </div>
     </div>
-    <div class="hero-overlay"></div>
 </section>
 
 <!-- About Section -->
 <section class="about-section py-5">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="col-lg-6 mb-4 mb-lg-0 reveal">
                 <div class="about-image position-relative">
                     <img src="https://picsum.photos/id/225/600/400" alt="About Explorium" class="img-fluid rounded shadow">
-                    <div class="experience-badge">
-                        <span class="years">5+</span>
-                        <span class="text">Years of Experience</span>
-                    </div>
+                    
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 reveal" style="transition-delay: 0.2s;">
                 <div class="section-title mb-4">
                     <span class="subtitle">About Us</span>
                     <h2>Promoting STEM Education in Kenya</h2>
@@ -96,6 +140,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Programs Section -->
 <section class="programs-section py-5 bg-light">
@@ -356,31 +401,407 @@
 </section>
 {% endblock %}
 
+{% block extra_css %}
+<style>
+/* Hero Section Styles */
+:root {
+    --primary-color: #3498db; /* Match with your site's primary color */
+    --secondary-color: #2c3e50;
+    --light-color: #ffffff;
+    --dark-color: #1a1a1a;
+    --transition-speed: 0.5s;
+}
+
+/* Base Styles */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    overflow: hidden;
+}
+
+/* Slider Container */
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Individual Slides */
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+
+/* Slide Background */
+.slide-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scale(1.1);
+    transition: transform 7s ease;
+    z-index: -1;
+}
+
+.hero-slide.active .slide-bg {
+    transform: scale(1);
+}
+
+/* Slide Content */
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+    z-index: 0;
+}
+
+.hero-content {
+    max-width: 600px;
+    color: var(--light-color);
+    transform: translateY(50px);
+    opacity: 0;
+    transition: transform 0.8s ease 0.2s, opacity 0.8s ease 0.2s;
+}
+
+.hero-slide.active .hero-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Buttons */
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+    display: inline-block;
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.hero-buttons .btn-primary {
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    border: 2px solid var(--primary-color);
+}
+
+.hero-buttons .btn-primary:hover {
+    background-color: transparent;
+    color: var(--light-color);
+}
+
+.hero-buttons .btn-outline {
+    background-color: transparent;
+    color: var(--light-color);
+    border: 2px solid var(--light-color);
+}
+
+.hero-buttons .btn-outline:hover {
+    background-color: var(--light-color);
+    color: var(--dark-color);
+}
+
+/* Navigation Arrows */
+.slider-nav {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 10;
+}
+
+.slider-arrow {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 50%;
+    color: var(--light-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+
+.slider-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
+/* Slide Indicators */
+.slider-indicators {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem;
+    z-index: 10;
+}
+
+.indicator {
+    width: 3rem;
+    height: 0.25rem;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background-color: var(--light-color);
+    width: 4rem;
+}
+
+.indicator:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.75rem;
+    }
+    .hero-description {
+        font-size: 1.125rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.25rem;
+    }
+    .hero-content {
+        max-width: 100%;
+    }
+    .slider-nav {
+        padding: 0 1rem;
+    }
+    .slider-arrow {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 1.75rem;
+    }
+    .hero-description {
+        font-size: 1rem;
+    }
+    .hero-buttons .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.875rem;
+    }
+    .slider-arrow {
+        width: 36px;
+        height: 36px;
+    }
+    .indicator {
+        width: 2.5rem;
+    }
+    .indicator.active {
+        width: 3.5rem;
+    }
+}
+</style>
+{% endblock %}
+
 {% block extra_js %}
 <script>
-    // Newsletter form AJAX submission
-    $(document).ready(function() {
-        $('#newsletter-form').submit(function(e) {
-            e.preventDefault();
-            
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(response) {
-                    if (response.status === 'success') {
-                        $('.newsletter-response').html('<div class="alert alert-success mt-3">' + response.message + '</div>');
-                        $('#newsletter-form')[0].reset();
-                    } else {
-                        $('.newsletter-response').html('<div class="alert alert-danger mt-3">' + response.message + '</div>');
-                    }
-                },
-                error: function() {
-                    $('.newsletter-response').html('<div class="alert alert-danger mt-3">An error occurred. Please try again later.</div>');
-                }
-            });
+// Hero Slider Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const indicators = document.querySelectorAll('.indicator');
+    const prevArrow = document.querySelector('.prev-arrow');
+    const nextArrow = document.querySelector('.next-arrow');
+    
+    let currentSlide = 0;
+    let slideInterval;
+    const autoPlayDelay = 5000; // 5 seconds between slides
+    
+    // Initialize auto-play
+    startAutoPlay();
+    
+    // Function to start auto-play
+    function startAutoPlay() {
+        slideInterval = setInterval(() => {
+            goToSlide((currentSlide + 1) % slides.length);
+        }, autoPlayDelay);
+    }
+    
+    // Function to reset auto-play
+    function resetAutoPlay() {
+        clearInterval(slideInterval);
+        startAutoPlay();
+    }
+    
+    // Function to go to a specific slide
+    function goToSlide(index) {
+        // Remove active class from current slide and indicator
+        slides[currentSlide].classList.remove('active');
+        indicators[currentSlide].classList.remove('active');
+        
+        // Update current slide index
+        currentSlide = index;
+        
+        // Add active class to new slide and indicator
+        slides[currentSlide].classList.add('active');
+        indicators[currentSlide].classList.add('active');
+    }
+    
+    // Event listeners for indicators
+    indicators.forEach(indicator => {
+        indicator.addEventListener('click', function() {
+            const slideIndex = parseInt(this.getAttribute('data-index'));
+            if (slideIndex !== currentSlide) {
+                goToSlide(slideIndex);
+                resetAutoPlay();
+            }
         });
     });
+    
+    // Event listeners for navigation arrows
+    prevArrow.addEventListener('click', function() {
+        const prevSlide = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
+        goToSlide(prevSlide);
+        resetAutoPlay();
+    });
+    
+    nextArrow.addEventListener('click', function() {
+        const nextSlide = (currentSlide + 1) % slides.length;
+        goToSlide(nextSlide);
+        resetAutoPlay();
+    });
+    
+    // Pause auto-play when hovering over the slider
+    const heroSection = document.querySelector('.hero-section');
+    heroSection.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+    });
+    
+    heroSection.addEventListener('mouseleave', () => {
+        startAutoPlay();
+    });
+    
+    // Touch events for mobile swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    heroSection.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    
+    heroSection.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Swipe left - go to next slide
+            const nextSlide = (currentSlide + 1) % slides.length;
+            goToSlide(nextSlide);
+            resetAutoPlay();
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+            // Swipe right - go to previous slide
+            const prevSlide = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
+            goToSlide(prevSlide);
+            resetAutoPlay();
+        }
+    }
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            const prevSlide = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
+            goToSlide(prevSlide);
+            resetAutoPlay();
+        } else if (e.key === 'ArrowRight') {
+            const nextSlide = (currentSlide + 1) % slides.length;
+            goToSlide(nextSlide);
+            resetAutoPlay();
+        }
+    });
+});
+
+// Newsletter form AJAX submission
+$(document).ready(function() {
+    $('#newsletter-form').submit(function(e) {
+        e.preventDefault();
+        
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('.newsletter-response').html('<div class="alert alert-success mt-3">' + response.message + '</div>');
+                    $('#newsletter-form')[0].reset();
+                } else {
+                    $('.newsletter-response').html('<div class="alert alert-danger mt-3">' + response.message + '</div>');
+                }
+            },
+            error: function() {
+                $('.newsletter-response').html('<div class="alert alert-danger mt-3">An error occurred. Please try again later.</div>');
+            }
+        });
+    });
+});
 </script>
 {% endblock %}
