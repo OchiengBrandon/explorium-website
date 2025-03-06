@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ material.title }} - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <h1 class="display-4">{{ material.title }}</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'resources:teaching_material_list' %}" class="text-white">Teaching Materials</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ material.title }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Teaching Material Detail Section -->
+<section class="teaching-material-detail-section py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <!-- Featured Image -->
+                <div class="material-featured-image mb-4">
+                    <img src="{{ material.featured_image.url }}" alt="{{ material.title }}" class="img-fluid rounded shadow">
+                </div>
+                
+                <!-- Material Content -->
+                <div class="material-content card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h2 class="mb-4">About This Material</h2>
+                        <p>{{ material.description|safe }}</p>
+                        <a href="{% url 'resources:teaching_material_download' material.slug %}" class="btn btn-primary">Download Material</a>
+                    </div>
+                </div>
+
+                <!-- Material Gallery -->
+                {% if material.gallery_images.all %}
+                <div class="material-gallery card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Material Gallery</h3>
+                        <div class="row">
+                            {% for image in material.gallery_images.all %}
+                            <div class="col-md-4 col-6 mb-4">
+                                <a href="{{ image.image.url }}" class="gallery-item" data-caption="{{ image.caption }}">
+                                    <img src="{{ image.image.url }}" alt="{{ image.title }}" class="img-fluid rounded">
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Material Info -->
+                <div class="material-info card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Material Information</h3>
+                        
+                        <div class="material-info-item d-flex mb-3">
+                            <div class="material-info-icon me-3">
+                                <i class="fas fa-tag"></i>
+                            </div>
+                            <div class="material-info-content">
+                                <h5 class="mb-1">Level</h5>
+                                <p class="mb-0">{{ material.get_level_display }}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="material-info-item d-flex mb-3">
+                            <div class="material-info-icon me-3">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="material-info-content">
+                                <h5 class="mb-1">Target Audience</h5>
+                                <p class="mb-0">{{ material.get_audience_display }}</p>
+                            </div>
+                        </div>
+                        
+                        {% if material.subject %}
+                        <div class="material-info-item d-flex mb-3">
+                            <div class="material-info-icon me-3">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="material-info-content">
+                                <h5 class="mb-1">Subject</h5>
+                                <p class="mb-0">{{ material.subject }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if material.tags.all %}
+                        <div class="material-info-item d-flex">
+                            <div class="material-info-icon me-3">
+                                <i class="fas fa-tags"></i>
+                            </div>
+                            <div class="material-info-content">
+                                <h5 class="mb-1">Tags</h5>
+                                <div class="material-tags">
+                                    {% for tag in material.tags.all %}
+                                    <a href="#" class="badge bg-light text-dark me-1 mb-1">{{ tag.name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Related Materials -->
+                {% if related_materials %}
+                <div class="related-materials card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h3 class="mb-4">Related Materials</h3>
+                        <ul class="list-unstyled">
+                            {% for related in related_materials %}
+                            <li>
+                                <a href="{% url 'resources:teaching_material_detail' related.slug %}">{{ related.title }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="mb-4">Explore More Teaching Materials</h2>
+                <p class="lead mb-4">Discover a variety of teaching materials designed to enhance your learning experience.</p>
+                <a href="{% url 'resources:teaching_material_list' %}" class="btn btn-primary btn-lg">View All Teaching Materials</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .material-info-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(52, 152, 219, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-color);
+    }
+    
+    .gallery-item {
+        display: block;
+        border-radius: var(--radius);
+        overflow: hidden;
+        transition: var(--transition);
+    }
+    
+    .gallery-item:hover {
+        transform: scale(1.05);
+    }
+    
+    .material-tags .badge {
+        padding: 0.5rem 0.8rem;
+        border-radius: 30px;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize lightbox for gallery
+        $('.gallery-item').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true
+            }
+        });
+    });
+</script>
+{% endblock %}

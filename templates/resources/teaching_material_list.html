@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Teaching Materials - {{ site_settings.site_name }}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center py-5">
+                <h1 class="display-4">Teaching Materials</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-white">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Teaching Materials</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Material Filter Section -->
+<section class="material-filter py-5">
+    <div class="container">
+        <form method="get" class="mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <select name="level" class="form-select">
+                        <option value="">All Levels</option>
+                        {% for key, value in levels.items %}
+                        <option value="{{ key }}"{% if request.GET.level == key %} selected{% endif %}>{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select name="subject" class="form-select">
+                        <option value="">All Subjects</option>
+                        {% for subject in subjects %}
+                        <option value="{{ subject }}"{% if request.GET.subject == subject %} selected{% endif %}>{{ subject }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="q" class="form-control" placeholder="Search..." value="{{ request.GET.q }}">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Filter</button>
+        </form>
+    </div>
+</section>
+
+<!-- Teaching Materials Section -->
+<section class="teaching-materials-section py-5">
+    <div class="container">
+        <div class="row">
+            {% for material in materials %}
+            <div class="col-md-4 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <img src="{{ material.thumbnail.url }}" class="card-img-top" alt="{{ material.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ material.title }}</h5>
+                        <p class="card-text">{{ material.short_description }}</p>
+                        <a href="{% url 'resources:teaching_material_detail' material.slug %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info">No teaching materials found.</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}{% if request.GET.level %}&level={{ request.GET.level }}{% endif %}{% if request.GET.subject %}&subject={{ request.GET.subject }}{% endif %}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a>
+                </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+    .card-text {
+        font-size: 0.9rem;
+    }
+    .breadcrumb {
+        background-color: transparent;
+    }
+</style>
+{% endblock %}
