@@ -11,7 +11,6 @@ from programs.models import Program
 from events.models import Event
 from blog.models import Post
 
-
 class HomeView(TemplateView):
     template_name = 'home.html'
     
@@ -45,6 +44,14 @@ class AboutView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['team_members'] = TeamMember.objects.filter(is_active=True)
         context['partners'] = Partner.objects.filter(is_active=True)
+        return context
+
+class TeamView(TemplateView):
+    template_name = 'teams.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['team_members'] = TeamMember.objects.filter(is_active=True)
         return context
 
 class ContactView(FormView):

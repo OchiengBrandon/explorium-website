@@ -50,6 +50,9 @@
                         <li class="nav-item">
                             <a class="nav-link {% if request.path == '/about/' %}active{% endif %}" href="{% url 'core:about' %}">About</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/team/' %}active{% endif %}" href="{% url 'core:team' %}">Team</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="programsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Programs
@@ -175,6 +178,7 @@
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="{% url 'core:home' %}" class="text-white">Home</a></li>
                         <li class="mb-2"><a href="{% url 'core:about' %}" class="text-white">About Us</a></li>
+                        <li class="mb-2"><a href="{% url 'core:team' %}" class="text-white">Our Team</a></li>
                         <li class="mb-2"><a href="{% url 'programs:program_list' %}" class="text-white">Programs</a></li>
                         <li class="mb-2"><a href="{% url 'events:event_list' %}" class="text-white">Events</a></li>
                         <li class="mb-2"><a href="{% url 'resources:resource_list' %}" class="text-white">Resources</a></li>
