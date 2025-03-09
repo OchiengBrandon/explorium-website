@@ -150,48 +150,12 @@
     </div>
 </section>
 
-<!-- Team Section -->
-<section class="team-section py-5 bg-light">
-    <div class="container">
-        <div class="section-title text-center mb-5">
-            <span class="subtitle">Meet Our Team</span>
-            <h2>The People Behind Explorium</h2>
-            <p class="lead">Our dedicated team of professionals is passionate about promoting STEM education in Kenya.</p>
-        </div>
-        
-        <div class="row">
-            {% for member in team_members %}
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="team-card card border-0 shadow-sm">
-                    <div class="team-img">
-                        <img src="{{ member.image.url }}" alt="{{ member.name }}" class="card-img-top">
-                        <div class="team-social">
-                            {% if member.linkedin %}
-                            <a href="{{ member.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                            {% endif %}
-                            {% if member.twitter %}
-                            <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
-                            {% endif %}
-                            {% if member.email %}
-                            <a href="mailto:{{ member.email }}"><i class="fas fa-envelope"></i></a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="card-body text-center p-4">
-                        <h5 class="card-title mb-1">{{ member.name }}</h5>
-                        <p class="team-position text-muted mb-3">{{ member.position }}</p>
-                        <div class="team-bio">
-                            {{ member.bio|safe|truncatewords_html:25 }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12 text-center">
-                <p>Team information coming soon.</p>
-            </div>
-            {% endfor %}
-        </div>
+<!-- Link to Team Section -->
+<section class="team-link-section py-5 bg-light">
+    <div class="container text-center">
+        <h2 class="mb-4">Meet Our Team</h2>
+        <p class="lead mb-4">Learn more about the dedicated individuals behind Explorium.</p>
+        <a href="{% url 'core:team' %}" class="btn btn-primary btn-lg">View Team</a>
     </div>
 </section>
 
@@ -267,70 +231,6 @@
         margin: 0 auto;
         color: var(--primary-color);
         font-size: 1.8rem;
-    }
-    
-    .team-card {
-        border-radius: var(--radius);
-        overflow: hidden;
-        transition: var(--transition);
-    }
-    
-    .team-card:hover {
-        transform: translateY(-10px);
-    }
-    
-    .team-img {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .team-img img {
-        height: 300px;
-        object-fit: cover;
-        transition: var(--transition);
-    }
-    
-    .team-card:hover .team-img img {
-        transform: scale(1.1);
-    }
-    
-    .team-social {
-        position: absolute;
-        bottom: -50px;
-        left: 0;
-        right: 0;
-        background: rgba(52, 152, 219, 0.8);
-        padding: 15px 0;
-        transition: var(--transition);
-        opacity: 0;
-    }
-    
-    .team-card:hover .team-social {
-        bottom: 0;
-        opacity: 1;
-    }
-    
-    .team-social a {
-        display: inline-flex;
-        width: 36px;
-        height: 36px;
-        background: white;
-        color: var(--primary-color);
-        border-radius: 50%;
-        margin: 0 5px;
-        align-items: center;
-        justify-content: center;
-        transition: var(--transition);
-    }
-    
-    .team-social a:hover {
-        background: var(--dark-color);
-        color: white;
-    }
-    
-    .team-position {
-        display: block;
-        font-size: 0.9rem;
     }
 </style>
 {% endblock %}
