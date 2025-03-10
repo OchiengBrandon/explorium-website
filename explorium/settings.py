@@ -1,14 +1,15 @@
 import os
 from pathlib import Path
+from decouple import config  # Ensure you have python-decouple installed
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&ivr^61mjax3br$d2!_)bn+m&wdlfa6izp9%@#--3b&3+_3tqy'
+SECRET_KEY = config('SECRET_KEY')  # Store in .env for safety
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'explorium-website.onrender.com']
 
@@ -76,7 +77,7 @@ WSGI_APPLICATION = 'explorium.wsgi.application'
 # Database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # Change to a production-ready database if needed
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
@@ -137,8 +138,13 @@ ACCOUNT_UNIQUE_EMAIL = True
 LOGIN_REDIRECT_URL = 'core:home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'core:home'
 
-# Email settings (for development)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email settings for production with Google
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') 
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Store in .env
 
 # CKEditor Settings
 CKEDITOR_UPLOAD_PATH = 'uploads/'
